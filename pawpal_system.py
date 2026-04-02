@@ -79,18 +79,18 @@ from datetime import timedelta
 def create_next_occurrence(task):
     if task.frequency == "daily":
         return Task(
-            description=task.description,
-            time=task.time + timedelta(days=1),
-            frequency="daily",
-            completed=False
+            task.description,
+            task.time + timedelta(days=1),
+            "daily",
+            False
         )
 
     if task.frequency == "weekly":
         return Task(
-            description=task.description,
-            time=task.time + timedelta(weeks=1),
-            frequency="weekly",
-            completed=False
+            task.description,
+            task.time + timedelta(weeks=1),
+            "weekly",
+            False
         )
 
     return None

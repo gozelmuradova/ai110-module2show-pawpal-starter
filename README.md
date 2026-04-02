@@ -53,3 +53,24 @@ PawPal+ now includes basic intelligent scheduling features to make task manageme
 - The system detects scheduling conflicts when tasks occur at the same time.
 - Recurring tasks (daily/weekly) automatically generate the next occurrence after completion.
 - Scheduling logic is separated from the UI to keep the system modular and maintainable.
+
+
+## Features
+
+- Add and manage multiple pets
+- Schedule tasks per pet
+- Sort tasks by time using Scheduler class
+- Detect conflicting tasks automatically
+- Support recurring tasks (daily/weekly)
+- Clean Streamlit dashboard for visualization
+
+## Demo
+
+<a href="/course_images/ai110/your_screenshot_name.png" target="_blank">
+<img src='/course_images/ai110/your_screenshot_name.png'
+title='PawPal App'
+width=''
+alt='PawPal App'
+class='center-block' />
+</a>
+
