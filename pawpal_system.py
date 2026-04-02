@@ -49,12 +49,48 @@ class Owner:
 
 # ---------------- SCHEDULER ----------------
 class Scheduler:
-    def __init__(self, owner: Owner):
+    def __init__(self, owner):
         self.owner = owner
 
-    def get_todays_tasks(self):
-        today = datetime.now().date()
-        return [
-            task for task in self.owner.get_all_tasks()
-            if task.time.date() == today
-        ]
+    def sort_by_time(self, tasks):
+        return sorted(tasks, key=lambda t: t.time)
+
+    def detect_conflicts(self, tasks):
+        warnings = []
+
+        tasks_sorted = sorted(tasks, key=lambda t: t.time)
+
+        for i in range(len(tasks_sorted) - 1):
+            if tasks_sorted[i].time == tasks_sorted[i + 1].time:
+                warnings.append(
+                    f"Conflict: {tasks_sorted[i].description} and {tasks_sorted[i + 1].description}"
+                )
+
+        return warnings
+
+
+
+
+
+
+
+from datetime import timedelta
+
+def create_next_occurrence(task):
+    if task.frequency == "daily":
+        return Task(
+            description=task.description,
+            time=task.time + timedelta(days=1),
+            frequency="daily",
+            completed=False
+        )
+
+    if task.frequency == "weekly":
+        return Task(
+            description=task.description,
+            time=task.time + timedelta(weeks=1),
+            frequency="weekly",
+            completed=False
+        )
+
+    return None
