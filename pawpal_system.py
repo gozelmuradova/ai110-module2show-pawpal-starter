@@ -3,64 +3,58 @@ from typing import List
 from datetime import datetime
 
 
+# ---------------- TASK ----------------
 @dataclass
 class Task:
-    id: int
-    title: str
-    due_time: datetime
-    completed: bool
-    pet_id: int
+    description: str
+    time: datetime
+    frequency: str
+    completed: bool = False
+    pet_id: int = None
 
     def mark_complete(self):
-        pass
+        self.completed = True
 
 
-@dataclass
+# ---------------- PET ----------------
 class Pet:
-    id: int
-    name: str
-    species: str
-    age: int
-    tasks: List[Task]
+    def __init__(self, name: str, species: str, age: int = 0, tasks: List[Task] = None):
+        self.name = name
+        self.species = species
+        self.age = age
+        self.tasks = tasks if tasks is not None else []
 
     def add_task(self, task: Task):
-        pass
+        self.tasks.append(task)
 
-    def remove_task(self, task_id: int):
-        pass
-
-    def get_tasks(self) -> List[Task]:
-        pass
+    def get_tasks(self):
+        return self.tasks
 
 
+# ---------------- OWNER ----------------
 class Owner:
-    def __init__(self, id: int, name: str):
-        self.id = id
+    def __init__(self, name: str):
         self.name = name
         self.pets: List[Pet] = []
 
     def add_pet(self, pet: Pet):
-        pass
+        self.pets.append(pet)
 
-    def remove_pet(self, pet_id: int):
-        pass
+    def get_all_tasks(self):
+        tasks = []
+        for pet in self.pets:
+            tasks.extend(pet.get_tasks())
+        return tasks
 
-    def get_pets(self) -> List[Pet]:
-        pass
 
-
+# ---------------- SCHEDULER ----------------
 class Scheduler:
-    def __init__(self):
-        self.tasks: List[Task] = []
+    def __init__(self, owner: Owner):
+        self.owner = owner
 
-    def add_task(self, task: Task):
-        pass
-
-    def remove_task(self, task_id: int):
-        pass
-
-    def get_tasks_for_today(self) -> List[Task]:
-        pass
-
-    def get_upcoming_tasks(self) -> List[Task]:
-        pass
+    def get_todays_tasks(self):
+        today = datetime.now().date()
+        return [
+            task for task in self.owner.get_all_tasks()
+            if task.time.date() == today
+        ]
